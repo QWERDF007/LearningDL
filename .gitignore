@@ -1,0 +1,7 @@
+node_modules/
+package.json
+package-lock.json
+*.pt
+*.ipynb_checkpoints
+*.idea
+*data/
