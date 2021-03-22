@@ -97,7 +97,7 @@ def extract_data(data_dir, x_name, y_name):
 
 if __name__ == '__main__':
     os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-    mnist_dir = r"F:\Workspaces\Projects\LearningDL\code\notebook\data"  # 下载的MNIST的文件夹路径
+    mnist_dir = "./data"  # 下载的MNIST的文件夹路径
     X_train, Y_train = extract_data(mnist_dir, "train-images-idx3-ubyte.gz", "train-labels-idx1-ubyte.gz")
     X_test, Y_test = extract_data(mnist_dir, "t10k-images-idx3-ubyte.gz", "t10k-labels-idx1-ubyte.gz")
 
