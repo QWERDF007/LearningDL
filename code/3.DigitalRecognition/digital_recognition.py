@@ -16,17 +16,19 @@ class Net(nn.Module):
         self.conv1 = nn.Conv2d(1, 32, 3, 1)  # [32, 26, 26]
         self.conv2 = nn.Conv2d(32, 64, 3, 1)  # [64, 24, 24]
         # max_pool2d [64, 12, 12]
+        self.dropout1 = nn.Dropout(0.25)
         self.fc1 = nn.Linear(64 * 12 * 12, 128)  # [128]
+        self.dropout2 = nn.Dropout(0.5)
         self.fc2 = nn.Linear(128, 10)  # [10]
 
     def forward(self, x):
         x = F.relu(self.conv1(x))
         x = F.relu(self.conv2(x))
         x = F.max_pool2d(x, (2, 2))
-        x = nn.Dropout(0.25)(x)
+        x = self.dropout1(x)
         x = x.view(-1, self.num_flat_features(x))
         x = F.relu(self.fc1(x))
-        x = nn.Dropout(0.5)(x)
+        x = self.dropout2(x)
         x = F.relu(self.fc2(x))
         return x
 
@@ -45,6 +47,7 @@ if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = net.to(device)
     model.load_state_dict(torch.load(checkpoint))
+    model.eval()
     print(model)
     transform = transforms.Compose([
         transforms.Resize((28, 28)),
@@ -54,17 +57,18 @@ if __name__ == '__main__':
     total = len(paths)
     col = 4
     row = math.ceil(total / col)
-    for i, path in enumerate(paths, start=1):
-        plt.subplot(row, col, i)
-        img_path = str(path)
-        img = Image.open(img_path).convert('L')
-        img = img.point(lambda p: p < 100 and 255)
-        tensor = transform(img)
-        tensor = tensor.unsqueeze(0).to(device)
-        output = model(tensor)
-        preds = F.softmax(output, 1)
-        v, idx = preds.topk(1)
-        img = img.resize((28, 28))
-        plt.imshow(img, cmap='gray')
-        plt.title("{}: {:.3f}".format(idx.item(), v.item()))
+    with torch.no_grad():
+        for i, path in enumerate(paths, start=1):
+            plt.subplot(row, col, i)
+            img_path = str(path)
+            img = Image.open(img_path).convert('L')
+            img = img.point(lambda p: p < 128 and 255)
+            tensor = transform(img)
+            tensor = tensor.unsqueeze(0).to(device)
+            output = model(tensor)
+            preds = F.softmax(output, 1)
+            v, idx = preds.topk(1)
+            img = img.resize((28, 28))
+            plt.imshow(img, cmap='gray')
+            plt.title("{}: {:.3f}".format(idx.item(), v.item()))
     plt.show()
