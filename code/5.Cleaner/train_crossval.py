@@ -375,7 +375,7 @@ def main_worker(gpu, ngpus_per_node, args):
         train_dataset = datasets.ImageFolder(
             traindir,
             transforms.Compose([
-                transforms.RandomResizedCrop(224),
+                transforms.Resize((224, 224)),
                 transforms.RandomHorizontalFlip(),
                 transforms.ToTensor(),
                 normalize,
@@ -395,7 +395,7 @@ def main_worker(gpu, ngpus_per_node, args):
             val_dataset = datasets.ImageFolder(
                 valdir,
                 transforms.Compose([
-                    transforms.RandomResizedCrop(224),
+                    transforms.Resize((224, 224)),
                     transforms.RandomHorizontalFlip(),
                     transforms.ToTensor(),
                     normalize,
