@@ -8,4 +8,5 @@
 | [2. hello world](docs/2.HelloWorld.md) | [code](code/2.HelloWorld)         |
 | [3. 数字识别](docs/3.数字识别.md)      | [code](code/3.DigitalRecognition) |
 | [4. 猫狗大战](docs/4.猫狗大战.md)      | [code](code/4.DogsVsCats)         |
+| [5. 数据清洗](docs/5.数据清洗.md)      | [code](code/5.Cleaner)            |
 
