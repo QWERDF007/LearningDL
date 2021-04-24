@@ -7,3 +7,5 @@ package-lock.json
 *data/
 *__pycache__/
 *.db
+*.tar
+*.pth
