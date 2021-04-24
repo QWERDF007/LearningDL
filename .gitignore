@@ -8,4 +8,4 @@ package-lock.json
 *__pycache__/
 *.db
 *.tar
-*.pth
+*.log
