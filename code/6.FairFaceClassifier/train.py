@@ -299,7 +299,7 @@ def main_worker(gpu, ngpus_per_node, args):
         if args.verbose:
             checkpoint = {
                 'epoch': epoch,
-                'state_dict': model.state_dict(),
+                'state_dict': model.state_dict() if not args.distributed else model.module.state_dict(),
                 'optimizer': optimizer.state_dict()
             }
             save_checkpoint(checkpoint, args.output, epoch, val_loss, val_acc, is_best)

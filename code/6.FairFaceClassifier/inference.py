@@ -90,18 +90,19 @@ def inference():
     _logger.info("create model '{}'".format(args.arch))
     model = create_model(args.arch, args.num_classes, pretrained=False)
 
-    dist.init_process_group(
-        backend='gloo',
-        init_method='file:///f:tmp/sharefile',
-        world_size=1,
-        rank=0,
-    )
+    # windows 无法使用nccl，下只能用gloo
+    # dist.init_process_group(
+    #     backend='gloo',
+    #     init_method='file:///f:tmp/sharefile',
+    #     world_size=1,
+    #     rank=0,
+    # )
 
     _logger.info("loading '{}'".format(args.model))
     if args.gpu is not None:
         torch.cuda.set_device(args.gpu)
         model.cuda(args.gpu)
-        model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
+        # model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
         checkpoint = torch.load(args.model, map_location='cuda:{}'.format(args.gpu))
     else:
         checkpoint = torch.load(args.model)
