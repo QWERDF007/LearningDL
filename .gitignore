@@ -9,3 +9,4 @@ package-lock.json
 *.db
 *.tar
 *.log
+*checkpoints/
