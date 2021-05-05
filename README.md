@@ -11,4 +11,5 @@
 | [5. 数据清洗](docs/5.数据清洗.md)                     | [code](code/5.Cleaner)            |
 | [6. FairFace多标签分类](docs/6.FairFace多标签分类.md) | [code](code/6.FairFaceClassifier) |
 | [7. CNN可视化](docs/7.CNN可视化.md)                   | [code](code/7.CNNVisualizations)  |
+| [8. 人物肖像画](docs/8.人物肖像画.md)                 | [code](code/8.Portrait)           |
 
